@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Li Man Kit — CV</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #1a1a1a;
+      background: #fff;
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 20mm 18mm 16mm;
+      line-height: 1.45;
+      font-size: 10pt;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 2.5px solid #1a1a1a;
+    }
+    .header-left h1 {
+      font-size: 22pt;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .header-left .contact {
+      font-size: 9.5pt;
+      color: #444;
+      margin-top: 3px;
+    }
+    .header-left .contact a { color: #444; text-decoration: none; }
+    .header-right {
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .header-right canvas {
+      display: block;
+    }
+    .header-right .qr-label {
+      font-size: 7pt;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    /* Sections */
+    .section { margin-bottom: 12px; }
+    .section-title {
+      font-size: 11pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      border-bottom: 1.2px solid #ccc;
+      padding-bottom: 2px;
+      margin-bottom: 7px;
+      color: #1a1a1a;
+    }
+
+    /* Entry */
+    .entry { margin-bottom: 9px; }
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .entry-title { font-weight: 600; font-size: 10.5pt; }
+    .entry-date { font-size: 9pt; color: #555; white-space: nowrap; }
+    .entry-sub { font-size: 9.5pt; color: #444; font-style: italic; }
+    .entry ul {
+      margin: 3px 0 0 16px;
+      font-size: 9.5pt;
+    }
+    .entry li { margin-bottom: 1.5px; }
+
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 3px 12px;
+      font-size: 9.5pt;
+    }
+    .skills-grid .label { font-weight: 600; color: #333; }
+    .skills-grid .value { color: #444; }
+
+    /* Print */
+    @media print {
+      body { padding: 18mm 16mm 14mm; }
+      .no-print { display: none; }
+    }
+
+    /* Screen helpers */
+    @media screen {
+      body {
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      .print-btn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #1a1a1a;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        z-index: 100;
+      }
+      .print-btn:hover { background: #333; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">Save as PDF / Print</button>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-left">
+    <h1>LI MAN KIT</h1>
+    <div class="contact">
+      markli12320@gmail.com&ensp;·&ensp;Hong Kong Baptist University — BSc Computer Science (Year 4)
+    </div>
+  </div>
+  <div class="header-right">
+    <canvas id="qr"></canvas>
+    <div class="qr-label">Portfolio ↗</div>
+  </div>
+</div>
+
+<!-- Education -->
+<div class="section">
+  <div class="section-title">Education</div>
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Bachelor of Science in Computer Science</span>
+      <span class="entry-date">Sep 2022 – Present</span>
+    </div>
+    <div class="entry-sub">Hong Kong Baptist University</div>
+  </div>
+</div>
+
+<!-- Experience -->
+<div class="section">
+  <div class="section-title">Experience</div>
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Security Intern — Alpacian Limited</span>
+      <span class="entry-date">Jun 2025 – Aug 2025</span>
+    </div>
+    <ul>
+      <li>Assisted in security assessments: Vulnerability Assessment, Penetration Testing, Configuration Reviews</li>
+      <li>Prepared documentation aligned with regional and international information security best practices and frameworks</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Projects -->
+<div class="section">
+  <div class="section-title">Projects</div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">WiFi Fingerprint-Based Indoor Localization System</span>
+      <span class="entry-date">Final Year Project · Ongoing</span>
+    </div>
+    <ul>
+      <li>End-to-end indoor positioning using WiFi RSSI fingerprints and a 1D-CNN (PyTorch) for (x, y) prediction</li>
+      <li>FastAPI backend with endpoints for data collection, CNN inference, A* pathfinding, and floor plans</li>
+      <li>Android app (Kotlin/Jetpack Compose) with real-time localization and Kalman filter smoothing</li>
+      <li>ESP32 embedded firmware (M5StickC Plus) for handheld WiFi scanning and position prediction</li>
+      <li>Data pipeline: CSV collection → RSSI normalization → Gaussian noise augmentation → GPU-accelerated training</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">HKBU Career Fair Companion App (iOS)</span>
+      <span class="entry-date">Prototype · 2026</span>
+    </div>
+    <ul>
+      <li>SwiftUI + MVVM app for 100+ exhibitor booths with Auth0 SSOID authentication</li>
+      <li>Personalized booth recommendations via weighted scoring (industry, zone, purpose matching)</li>
+      <li>QR-based e-stamp gamification with signature verification and 4 prize tiers</li>
+      <li>Interactive multi-venue floor maps, exhibitor directory with search/filter, and push notifications</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Equipment Management System (Android)</span>
+      <span class="entry-date">Coursework</span>
+    </div>
+    <ul>
+      <li>Kotlin + Jetpack Compose app with equipment booking, search, and role-based access control</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Activities -->
+<div class="section">
+  <div class="section-title">Activities</div>
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">HKBU Robotic Team — Member</span>
+      <span class="entry-date">Ongoing</span>
+    </div>
+    <ul>
+      <li>Programming: motor control, robot arm kinematics, embedded firmware (C++)</li>
+      <li>Hardware design: mechanical parts modeled in OpenSCAD (e.g. harmonic drive component)</li>
+      <li>Prototyping and testing for Robocon 2025 competition</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Skills -->
+<div class="section">
+  <div class="section-title">Technical Skills</div>
+  <div class="skills-grid">
+    <span class="label">Languages</span>
+    <span class="value">Python, Kotlin, Swift, C++, JavaScript</span>
+    <span class="label">Frameworks</span>
+    <span class="value">PyTorch, FastAPI, Jetpack Compose, SwiftUI, Material 3</span>
+    <span class="label">Tools</span>
+    <span class="value">Git, OpenSCAD, Android Studio, Xcode</span>
+    <span class="label">Platforms</span>
+    <span class="value">ESP32 (M5StickC), Arduino, Linux, Azure</span>
+    <span class="label">Security</span>
+    <span class="value">Vulnerability Assessment, Penetration Testing, Configuration Review</span>
+  </div>
+</div>
+
+<!-- QR Code: qrcode-generator (MIT licensed, inline for offline use) -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script>
+(function(){
+  var qr = qrcode(0, 'L');
+  qr.addData('https://learner1087.github.io');
+  qr.make();
+  var cells = qr.getModuleCount();
+  var cellSize = 3;
+  var canvas = document.getElementById('qr');
+  canvas.width = canvas.height = cells * cellSize;
+  var ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#000';
+  for (var r = 0; r < cells; r++)
+    for (var c = 0; c < cells; c++)
+      if (qr.isDark(r, c))
+        ctx.fillRect(c * cellSize, r * cellSize, cellSize, cellSize);
+})();
+</script>
+</body>
+</html>

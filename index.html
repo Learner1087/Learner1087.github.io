@@ -1,11 +1,439 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>
-      Demo Web App
-    </title>
-  </head>
-  <body>
-    This is my GitHub Pages website!
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Li Man Kit — Portfolio</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --accent2: #bc8cff;
+      --green: #3fb950;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 80px 20px 50px;
+      background: linear-gradient(135deg, #0d1117 0%, #1a1f36 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero h1 { font-size: 2.8rem; margin-bottom: 8px; }
+    .hero .subtitle { color: var(--muted); font-size: 1.15rem; margin-bottom: 16px; }
+    .hero .contact { color: var(--accent); font-size: 0.95rem; }
+
+    /* Nav */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,17,23,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: center; gap: 32px;
+      padding: 14px 20px;
+    }
+    nav a { color: var(--muted); font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+    nav a:hover { color: var(--text); text-decoration: none; }
+
+    /* Sections */
+    .section {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+    .section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      color: var(--accent2);
+    }
+    .section h2::before {
+      content: '# ';
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .section-desc { color: var(--muted); margin-bottom: 32px; }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 28px;
+    }
+    .card h3 { font-size: 1.35rem; margin-bottom: 4px; }
+    .card .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 14px; }
+    .card p { margin-bottom: 12px; }
+
+    /* Tags */
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .tag {
+      background: rgba(88,166,255,0.12);
+      color: var(--accent);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+    .tag.green { background: rgba(63,185,80,0.12); color: var(--green); }
+    .tag.purple { background: rgba(188,140,255,0.12); color: var(--accent2); }
+
+    /* Screenshots grid */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .screenshot-grid img {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+    .screenshot-grid img:hover { transform: scale(1.03); }
+
+    /* Video */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .video-grid video {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .video-caption {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 6px;
+      text-align: center;
+    }
+
+    /* Highlights list */
+    .highlights { list-style: none; padding: 0; }
+    .highlights li {
+      padding: 6px 0 6px 20px;
+      position: relative;
+      color: var(--text);
+    }
+    .highlights li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9); z-index: 1000;
+      justify-content: center; align-items: center; cursor: zoom-out;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img { max-width: 90%; max-height: 90%; border-radius: 8px; }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2rem; }
+      .screenshot-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+      .video-grid { grid-template-columns: 1fr; }
+      nav { gap: 16px; font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>Li Man Kit</h1>
+  <p class="subtitle">Computer Science Student · HKBU · Year 4</p>
+  <p class="contact">markli12320@gmail.com · <a href="cv.html">View CV</a></p>
+</div>
+
+<!-- Navigation -->
+<nav>
+  <a href="#education">Education</a>
+  <a href="#experience">Experience</a>
+  <a href="#fyp">FYP</a>
+  <a href="#career-fair">Career Fair App</a>
+  <a href="#robotic">Robotic Team</a>
+  <a href="#coursework">Coursework</a>
+</nav>
+
+<!-- Education -->
+<div class="section" id="education">
+  <h2>Education</h2>
+  <div class="card">
+    <h3>Bachelor of Science in Computer Science</h3>
+    <p class="meta">Hong Kong Baptist University · Sep 2022 – Present (Year 4)</p>
+  </div>
+</div>
+
+<!-- Experience -->
+<div class="section" id="experience">
+  <h2>Work Experience</h2>
+  <div class="card">
+    <h3>Security Intern</h3>
+    <p class="meta">Alpacian Limited · Jun 2025 – Aug 2025</p>
+    <ul class="highlights">
+      <li>Assisted in security assessments including Vulnerability Assessment, Penetration Testing, and Configuration Reviews</li>
+      <li>Prepared documentation based on regional and international information security best practices, regulations, and frameworks</li>
+    </ul>
+    <div class="tags">
+      <span class="tag">Vulnerability Assessment</span>
+      <span class="tag">Penetration Testing</span>
+      <span class="tag">Configuration Review</span>
+      <span class="tag green">Information Security</span>
+    </div>
+  </div>
+</div>
+
+<!-- FYP -->
+<div class="section" id="fyp">
+  <h2>Final Year Project</h2>
+  <p class="section-desc">WiFi Fingerprint-Based Indoor Localization System — Ongoing</p>
+
+  <div class="card">
+    <h3>Overview</h3>
+    <p>An end-to-end indoor positioning system that uses WiFi signal strengths (RSSI) from surrounding access points to predict a user's (x, y) coordinates inside a building. The system uses a <strong>1D Convolutional Neural Network</strong> trained on collected WiFi fingerprints.</p>
+    <div class="tags">
+      <span class="tag">Python</span>
+      <span class="tag">PyTorch</span>
+      <span class="tag">FastAPI</span>
+      <span class="tag">Kotlin</span>
+      <span class="tag">Jetpack Compose</span>
+      <span class="tag green">ESP32 / C++</span>
+      <span class="tag purple">Machine Learning</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Backend — FastAPI Server</h3>
+    <ul class="highlights">
+      <li>Training pipeline: loads WiFi scan CSV data, builds RSSI vectors, normalizes to [0,1], augments with Gaussian noise, trains a 1D-CNN (Conv1D → BatchNorm → ReLU → MaxPool → FC → Dropout) with early stopping</li>
+      <li>REST API endpoints: <code>/positions</code> (save scans), <code>/predict</code> (CNN inference), <code>/path</code> (A* pathfinding), <code>/facilities</code> (POI lookup), <code>/maps</code> (floor plans)</li>
+
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Android App — Kotlin + Jetpack Compose</h3>
+    <ul class="highlights">
+      <li>5 screens: WiFi List, Location/Scan (data collection), Floor Plan, Predict (real-time localization), Show Stored</li>
+      <li>Real-time localization with Kalman filter smoothing for noisy predictions</li>
+      <li>Filters out locally-administered (randomized) MAC addresses for fingerprint stability</li>
+      <li>Networking via Ktor HTTP client; local storage via SharedPreferences</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Embedded Firmware — M5StickC Plus (ESP32)</h3>
+    <ul class="highlights">
+      <li><strong>M5_wifiscan:</strong> Handheld device for training data collection — scans 2.4 GHz + 5 GHz, records ~120 scans per location, uploads via HTTP POST</li>
+
+      <li><strong>M5_wfi_predictor:</strong> Real-time position prediction device with single-shot and continuous scanning modes</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Key Technical Choices</h3>
+    <ul class="highlights">
+      <li><strong>WiFi fingerprinting</strong> — leverages existing infrastructure, no extra hardware needed</li>
+      <li><strong>1D-CNN</strong> — captures correlations between RSSI values across APs; outperforms fully-connected networks</li>
+      <li><strong>Active scanning</strong> — faster AP discovery (~1–2s vs ~3s passive)</li>
+      <li><strong>Kalman filter</strong> — smooths noisy predictions on the Android client</li>
+      <li><strong>Data augmentation</strong> — Gaussian noise during training improves real-world generalization</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Career Fair App -->
+<div class="section" id="career-fair">
+  <h2>HKBU Career Fair Companion App</h2>
+  <p class="section-desc">iOS Prototype — SwiftUI + MVVM · Built for HKBU Career Fair 2026 (Mar 10–12)</p>
+
+  <div class="card">
+    <h3>Overview</h3>
+    <p>A full-featured iOS companion app for the HKBU Career Fair, supporting 100+ exhibitor booths. Includes authentication (Auth0 SSOID), personalized recommendations, interactive floor maps, QR-based e-stamp gamification, and push notifications.</p>
+    <div class="tags">
+      <span class="tag">Swift</span>
+      <span class="tag">SwiftUI</span>
+      <span class="tag">MVVM</span>
+      <span class="tag">Auth0</span>
+      <span class="tag green">AVFoundation</span>
+      <span class="tag purple">PDFKit</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Core Features</h3>
+    <ul class="highlights">
+      <li><strong>Smart Recommendations:</strong> Scoring algorithm (70% industry/zone match, 30% purpose/preference) recommends booths based on user profile</li>
+      <li><strong>E-Stamp Gamification:</strong> QR code scanning at booths to collect stamps across 3 categories (Recruitment, Branding, Skill-Up) with 4 prize tiers</li>
+      <li><strong>Interactive Map:</strong> Visual floor plans for 3 venues across 3 days with server-driven booth layouts</li>
+      <li><strong>Exhibitor Directory:</strong> Search and filter 100+ booths by date, zone, interest, and purpose</li>
+      <li><strong>Events &amp; Itinerary:</strong> Event listing with chronological sorting, bookmarking with push notification reminders</li>
+      <li><strong>QR Code System:</strong> Pipe-delimited strings with signature verification for booth stamps, event stamps, and prize redemption</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>App Screenshots</h3>
+    <div class="screenshot-grid">
+      <div>
+        <img src="career_fair/landing_page.PNG" alt="Landing Page" onclick="openLightbox(this)">
+        <p class="video-caption">Landing Page</p>
+      </div>
+      <div>
+        <img src="career_fair/events_page.PNG" alt="Events" onclick="openLightbox(this)">
+        <p class="video-caption">Events</p>
+      </div>
+      <div>
+        <img src="career_fair/recommendation_page.PNG" alt="For You" onclick="openLightbox(this)">
+        <p class="video-caption">For You</p>
+      </div>
+      <div>
+        <img src="career_fair/exhibitor_page.PNG" alt="Directory" onclick="openLightbox(this)">
+        <p class="video-caption">Directory</p>
+      </div>
+      <div>
+        <img src="career_fair/exhibitor_detail.PNG" alt="Booth Details" onclick="openLightbox(this)">
+        <p class="video-caption">Booth Details</p>
+      </div>
+      <div>
+        <img src="career_fair/map_page.PNG" alt="Map" onclick="openLightbox(this)">
+        <p class="video-caption">Map</p>
+      </div>
+      <div>
+        <img src="career_fair/e-stamp_page.PNG" alt="E-Stamp" onclick="openLightbox(this)">
+        <p class="video-caption">E-Stamp</p>
+      </div>
+      <div>
+        <img src="career_fair/user_profile_page.PNG" alt="Profile" onclick="openLightbox(this)">
+        <p class="video-caption">Profile</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Robotic Team -->
+<div class="section" id="robotic">
+  <h2>HKBU Robotic Team</h2>
+  <p class="section-desc">Programming &amp; hardware design — motor control, robot arm, mechanical parts</p>
+
+  <div class="card">
+    <h3>Contributions</h3>
+    <ul class="highlights">
+      <li>Programming: motor control, robot arm kinematics, and embedded firmware</li>
+      <li>Hardware design: mechanical parts designed with OpenSCAD (e.g. harmonic drive component)</li>
+      <li>Robot prototyping and testing for Robocon 2025 competition</li>
+    </ul>
+    <div class="tags">
+      <span class="tag">C++</span>
+      <span class="tag">Python</span>
+      <span class="tag green">OpenSCAD</span>
+      <span class="tag purple">Embedded Systems</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Hardware Design</h3>
+    <img src="robotic/harmonic_drive.png" alt="Harmonic Drive Design" style="width:100%;max-width:420px;border-radius:10px;border:1px solid var(--border);margin-top:8px;">
+    <p class="video-caption" style="text-align:left;margin-top:8px;">Harmonic drive component — designed in OpenSCAD</p>
+  </div>
+
+  <div class="card">
+    <h3>Demo Videos</h3>
+    <div class="video-grid">
+      <div>
+        <video controls preload="metadata">
+          <source src="robotic/harmonic_drive_demo.mp4" type="video/mp4">
+        </video>
+        <p class="video-caption">Harmonic Drive Demo</p>
+      </div>
+      <div>
+        <video controls preload="metadata" playsinline>
+          <source src="robotic/robocon2025_base_movement_test.mov" type="video/mp4">
+          Your browser does not support this video.
+        </video>
+        <p class="video-caption">Robocon 2025 — Base Movement Test</p>
+      </div>
+      <div>
+        <video controls preload="metadata">
+          <source src="robotic/robocon2025_basketball_shooting_test_run.mp4" type="video/mp4">
+        </video>
+        <p class="video-caption">Robocon 2025 — Basketball Shooting Test</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Coursework -->
+<div class="section" id="coursework">
+  <h2>Coursework</h2>
+  <div class="card">
+    <h3>Equipment Management System</h3>
+    <p class="meta">Android Application · Kotlin + Jetpack Compose</p>
+    <ul class="highlights">
+      <li>Tabbed navigation for different management sections</li>
+      <li>Equipment booking and reservation system</li>
+      <li>Search functionality with keyword filtering</li>
+      <li>Login state management with role-based UI</li>
+    </ul>
+    <div class="tags">
+      <span class="tag">Kotlin</span>
+      <span class="tag">Jetpack Compose</span>
+      <span class="tag green">Material 3</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  &copy; 2026 Li Man Kit · Built with GitHub Pages
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  function openLightbox(el) {
+    document.getElementById('lightbox-img').src = el.src;
+    document.getElementById('lightbox').classList.add('active');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+</body>
 </html>
