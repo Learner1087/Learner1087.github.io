@@ -77,6 +77,13 @@
     .card h3 { font-size: 1.35rem; margin-bottom: 4px; }
     .card .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 14px; }
     .card p { margin-bottom: 12px; }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+    .card-grid .card { margin-bottom: 0; }
 
     /* Tags */
     .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
@@ -163,7 +170,8 @@
       .hero h1 { font-size: 2rem; }
       .screenshot-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
       .video-grid { grid-template-columns: 1fr; }
-      nav { gap: 16px; font-size: 0.85rem; }
+      nav { gap: 16px; font-size: 0.85rem; flex-wrap: wrap; }
+      nav a { font-size: 0.85rem; }
     }
   </style>
 </head>
@@ -182,6 +190,7 @@
   <a href="#experience">Experience</a>
   <a href="#fyp">FYP</a>
   <a href="#career-fair">Career Fair App</a>
+  <a href="#ai-photobooth">AI Photobooth</a>
   <a href="#robotic">Robotic Team</a>
   <a href="#coursework">Coursework</a>
 </nav>
@@ -280,27 +289,38 @@
 
   <div class="card">
     <h3>Overview</h3>
-    <p>A full-featured iOS companion app for the HKBU Career Fair, supporting 100+ exhibitor booths. Includes authentication (Auth0 SSOID), personalized recommendations, interactive floor maps, QR-based e-stamp gamification, and push notifications.</p>
+    <p>A native iOS companion app for HKBU Career Fair 2026 that helps students authenticate, complete profile onboarding, discover exhibitors, plan booth visits, navigate venues, collect QR-based e-stamps, and redeem event rewards.</p>
     <div class="tags">
       <span class="tag">Swift</span>
       <span class="tag">SwiftUI</span>
       <span class="tag">MVVM</span>
       <span class="tag">Auth0</span>
+      <span class="tag">REST APIs</span>
       <span class="tag green">AVFoundation</span>
       <span class="tag purple">PDFKit</span>
     </div>
   </div>
 
-  <div class="card">
-    <h3>Core Features</h3>
-    <ul class="highlights">
-      <li><strong>Smart Recommendations:</strong> Scoring algorithm (70% industry/zone match, 30% purpose/preference) recommends booths based on user profile</li>
-      <li><strong>E-Stamp Gamification:</strong> QR code scanning at booths to collect stamps across 3 categories (Recruitment, Branding, Skill-Up) with 4 prize tiers</li>
-      <li><strong>Interactive Map:</strong> Visual floor plans for 3 venues across 3 days with server-driven booth layouts</li>
-      <li><strong>Exhibitor Directory:</strong> Search and filter 100+ booths by date, zone, interest, and purpose</li>
-      <li><strong>Events &amp; Itinerary:</strong> Event listing with chronological sorting, bookmarking with push notification reminders</li>
-      <li><strong>QR Code System:</strong> Pipe-delimited strings with signature verification for booth stamps, event stamps, and prize redemption</li>
-    </ul>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Core Features</h3>
+      <ul class="highlights">
+        <li><strong>Smart Recommendations:</strong> Rule-based scoring ranks booths by industry/zone relevance and employment preference match</li>
+        <li><strong>E-Stamp Gamification:</strong> AVFoundation QR scanning for booth check-ins, event stamps, duplicate prevention, tier eligibility, and prize redemption</li>
+        <li><strong>Interactive Map:</strong> Server-driven map layouts with day and location selectors, active booth matching, and detail-page navigation</li>
+        <li><strong>Exhibitor Directory:</strong> Search and filter exhibitor records by date, zone, interest area, and recruitment or branding purpose</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Engineering Details</h3>
+      <ul class="highlights">
+        <li>Centralized REST API integration with <code>URLSession</code>, Swift Concurrency, <code>Codable</code> decoding, and booth-data caching</li>
+        <li>Persistent app state using <code>UserDefaults</code> and JSON encoding for profiles, itineraries, stamp history, prize claims, and redemption records</li>
+        <li>Integrated Auth0.swift for SSO login, credential restoration, token handling, user info, and guest debugging workflows</li>
+        <li>Added developer settings for switching local, Azure App Service, and Kubernetes-hosted backend presets with cache invalidation</li>
+      </ul>
+    </div>
   </div>
 
   <div class="card">
@@ -339,6 +359,56 @@
         <p class="video-caption">Profile</p>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- AI Photobooth -->
+<div class="section" id="ai-photobooth">
+  <h2>AI Photobooth Migration Project</h2>
+  <p class="section-desc">COMP contribution — migration from a non-Next.js prototype toward a Next.js integration-ready architecture</p>
+
+  <div class="card">
+    <h3>Overview</h3>
+    <p>Contributed to the COMP-side migration of an existing AI photobooth prototype into a standalone Next.js 15 App Router application. The work focused on backend integration, authenticated API routes, server-side AI generation flow, image storage, and handoff readiness rather than original app/UI authorship or final deployment ownership.</p>
+    <div class="tags">
+      <span class="tag">Next.js 15</span>
+      <span class="tag">React 19</span>
+      <span class="tag">TypeScript</span>
+      <span class="tag">NextAuth 4</span>
+      <span class="tag green">NanoBanana API</span>
+      <span class="tag purple">STORAGE_PATH</span>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3>Next.js Migration</h3>
+      <ul class="highlights">
+        <li>Migrated the photobooth from a non-Next.js implementation toward the required standalone Next.js 15.5.9 App Router structure</li>
+        <li>Aligned the app with the required Node.js 20, React 19, TypeScript 5, NextAuth 4, and <code>output: "standalone"</code> deployment stack</li>
+        <li>Added the required NextAuth route structure, dummy SSO provider pattern, JWT session strategy, and custom session/user type contract for handoff</li>
+        <li>Separated browser-facing code from server-only secrets so NanoBanana keys and NextAuth secrets stay out of client bundles</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>COMP Integration</h3>
+      <ul class="highlights">
+        <li>Implemented the server-side generation route pattern: authenticate session, validate upload size, mint a short-lived NanoBanana token, call the image generation endpoint, and return the merged image</li>
+        <li>Adapted portrait/background image handling into base64 data URL inputs compatible with NanoBanana reference image requirements</li>
+        <li>Implemented generated-image persistence using the required <code>STORAGE_PATH/userId/batchId/generated_timestamp.png</code> convention</li>
+        <li>Added secure image-serving route behavior with path normalization, traversal checks, MIME handling, and cache headers</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Handoff Alignment</h3>
+    <ul class="highlights">
+      <li>Documented and aligned required environment variables including <code>NEXTAUTH_SECRET</code>, <code>NANO_BANANA_API_BASE_URL</code>, <code>NANO_BANANA_MINT_TOKEN_API_KEY</code>, prompt configuration, upload limit, base path, and storage path</li>
+      <li>Matched the integration checklist so the dummy development provider can be replaced by real authentication providers later</li>
+      <li>Kept ownership wording accurate: COMP migration and backend integration work, not original creation of the photobooth app or IMP frontend design</li>
+    </ul>
   </div>
 </div>
 

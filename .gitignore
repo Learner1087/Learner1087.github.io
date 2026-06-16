@@ -1,2 +1,7 @@
 # ignore personal files
 personal_info.txt
+
+# ignore summary markdown files
+*.md
+
+style_reference
